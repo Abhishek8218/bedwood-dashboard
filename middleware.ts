@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 // Define the paths that require authentication
-const protectedPaths = ['/dashboard']; // Add paths that need authentication
+const protectedPaths = ['/']; // Add paths that need authentication
 
 export function middleware(request: NextRequest) {
   const sessionId = request.cookies.get('session_id'); // Get the session cookie
@@ -19,5 +19,5 @@ export function middleware(request: NextRequest) {
 
 // Define the routes where the middleware will run
 export const config = {
-  matcher: ['/dashboard'], // Apply middleware only to these routes
+  matcher: ['/'], // Apply middleware only to these routes
 };

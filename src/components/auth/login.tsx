@@ -27,46 +27,44 @@ interface LoginResponse {
   sessionId: string; // Assuming session ID is returned as part of the response
   // Add more fields if your API response contains other data
 }
-
 // Dummy login function to simulate API call
 const loginUser = async (data: LoginFormInputs): Promise<LoginResponse> => {
-  // Replace the URL with your actual login API endpoint
-  const response = await fetch('api/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error('Login failed');
-  }
-
-  return response.json();
-};
-
-const Login: React.FC = () => {
-  const { handleSubmit, control, } = useForm<LoginFormInputs>({
-    resolver: yupResolver(loginSchema),
-  });
-
-  const handleLogin: UseMutationResult<LoginResponse, Error, LoginFormInputs> = useMutation(
-    {
+    // Simulate a successful login with dummy credentials
+    const dummyUsername = 'testuser';
+    const dummyPassword = '123456';
+    
+    if (data.username === dummyUsername && data.password === dummyPassword) {
+      // Return a dummy session ID
+      return {
+        sessionId: 'dummy-session-id-12345',
+        
+        
+      };
+    } else {
+      throw new Error('Invalid username or password');
+    }
+  };
+  
+  const Login: React.FC = () => {
+    const { handleSubmit, control } = useForm<LoginFormInputs>({
+      resolver: yupResolver(loginSchema),
+    });
+  
+    const handleLogin: UseMutationResult<LoginResponse, Error, LoginFormInputs> = useMutation({
       mutationKey: ['login'],
       mutationFn: loginUser,
       onSuccess: (data) => {
         // Save the session ID in a cookie
-        Cookies.set('sessionId', data.sessionId);
+        Cookies.set('session_id', data.sessionId);
         // Redirect to dashboard or any other page
-        window.location.href = '/dashboard';
+        window.location.href = '/';
       },
       onError: (error) => {
         // Handle login error
         console.error('Login failed:', error.message);
       },
-    }
-  );
+    });
+  
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (formData) => {
     handleLogin.mutate(formData);
