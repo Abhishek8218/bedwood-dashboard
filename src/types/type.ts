@@ -27,7 +27,7 @@ export type Product = {
     email: string
     orders: number
     spent: number
-    lastPurchase: string
+ 
   }
   
   export type SalesData = ChartData<'line', number[], string>

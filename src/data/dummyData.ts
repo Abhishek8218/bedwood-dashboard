@@ -81,10 +81,10 @@ export const salesData: SalesData = {
   ]
   
   export const customers: Customer[] = [
-    { id: 1, name: 'John Doe', email: 'john@example.com', orders: 5, spent: 2495, lastPurchase: '2023-06-01' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com', orders: 3, spent: 1597, lastPurchase: '2023-06-02' },
-    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', orders: 7, spent: 3492, lastPurchase: '2023-06-03' },
-    { id: 4, name: 'Alice Brown', email: 'alice@example.com', orders: 2, spent: 598, lastPurchase: '2023-06-04' },
-    { id: 5, name: 'Charlie Davis', email: 'charlie@example.com', orders: 4, spent: 1996, lastPurchase: '2023-06-05' },
+    { id: 1, name: 'John Doe', email: 'john@example.com', orders: 5, spent: 2495},
+    { id: 2, name: 'Jane Smith', email: 'jane@example.com', orders: 3, spent: 1597 },
+    { id: 3, name: 'Bob Johnson', email: 'bob@example.com', orders: 7, spent: 3492,  },
+    { id: 4, name: 'Alice Brown', email: 'alice@example.com', orders: 2, spent: 598, },
+    { id: 5, name: 'Charlie Davis', email: 'charlie@example.com', orders: 4, spent: 1996, },
   ]
   

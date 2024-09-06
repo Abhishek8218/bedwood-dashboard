@@ -12,6 +12,8 @@ import { CustomerList } from "../customer/customer"
 
 
 
+
+
  const Dashboard  = () => {
     const [activeTab, setActiveTab] = useState('dashboard')
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
@@ -38,7 +40,7 @@ import { CustomerList } from "../customer/customer"
               </button>
             </div>
           </header>
-          <main className="flex-1 overflow-y-auto p-6">
+          <main className="flex-1 overflow-y-auto p-6 max-w-[100vw]">
             {activeTab === 'dashboard' && (
               <>
                 <DashboardOverview />

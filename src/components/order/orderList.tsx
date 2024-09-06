@@ -13,6 +13,7 @@ export const  OrderList = () => {
     const [filterDate, setFilterDate] = useState('');
   
     const itemsPerPage = 20;
+    console.log(filterDate)
    // Replace with actual orders data
   
     const filteredOrders = orders
@@ -71,6 +72,7 @@ export const  OrderList = () => {
               onChange={(e) => setFilterDate(e.target.value)}
               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
             />
+         
           </div>
         </div>
         <div className="px-4 py-5 sm:p-6">

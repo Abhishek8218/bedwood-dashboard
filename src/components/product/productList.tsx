@@ -103,11 +103,11 @@ export const  ProductList =() =>  {
             Add Product
           </button>
         </div>
-        <div className="px-4 py-5 sm:p-6 overflow-x-scroll">
+        <div className="px-4 py-5 sm:p-6 overflow-x-scroll ">
           <div className="overflow-x-scroll">
-            <table className="min-w-full divide-y divide-gray-200 overflow-x-hidden">
+            <table className="min-w-full divide-y divide-gray-200 overflow-x-hidden ">
               <thead className="bg-gray-50">
-                <tr>
+                <tr className="max-h-20">
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Image</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('name')}>
                     Name {sortField === 'name' && (sortDirection === 'asc' ? '▲' : '▼')}
@@ -125,8 +125,8 @@ export const  ProductList =() =>  {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200 overflow-x-hidden">
-                {paginatedProducts.map((product) => (
-                  <tr key={product.id}>
+                {paginatedProducts.reverse().map((product) => (
+                  <tr key={product.id} >
                     <td className="px-6 py-4 whitespace-nowrap">
                       <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded" />
                     </td>
@@ -168,7 +168,7 @@ export const  ProductList =() =>  {
                 <button
                   onClick={() => setCurrentPage(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className= "relative self-end inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 >
                   <span className="sr-only">Previous</span>
                   <ChevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -177,7 +177,7 @@ export const  ProductList =() =>  {
                   <button
                     key={i}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                    className={`relative self-end inline-flex items-center px-4 py-2 border text-sm font-medium ${
                       currentPage === i + 1
                         ? 'z-10 bg-indigo-50 border-indigo-500 text-indigo-600'
                         : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
@@ -189,7 +189,7 @@ export const  ProductList =() =>  {
                 <button
                   onClick={() => setCurrentPage(currentPage + 1)}
                   disabled={currentPage === pageCount}
-                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className="relative self-end inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 >
                   <span className="sr-only">Next</span>
                   <ChevronRight className="h-5 w-5" aria-hidden="true" />
