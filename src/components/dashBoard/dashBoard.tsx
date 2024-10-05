@@ -1,11 +1,11 @@
 'use client';
 
-import { useState } from "react"
+import {  useState } from "react"
 import { Sidebar } from "../sidebar/sideBar"
 import { Menu } from "lucide-react"
 import { DashboardOverview } from "./dashBoardOverview"
 import { Analytics } from "./analytics"
-import { ProductList } from "../product/productList"
+import {ProductList}  from "../product/productList"
 import { OrderList } from "../order/orderList"
 import { CustomerList } from "../customer/customer"
 
@@ -17,6 +17,8 @@ import { CustomerList } from "../customer/customer"
  const Dashboard  = () => {
     const [activeTab, setActiveTab] = useState('dashboard')
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+
   
     return (
       <div className="flex min-h-screen bg-gray-100">

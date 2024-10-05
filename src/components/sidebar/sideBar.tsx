@@ -11,7 +11,14 @@ export const  Sidebar =({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOp
       { name: 'Orders', icon: ShoppingCart, value: 'orders' },
       { name: 'Customers', icon: Users, value: 'customers' },
     ]
-  
+    const handleLogout = () => {
+      // Remove the access_token cookie
+      document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+      window.location.href = '/auth/login';
+      
+      // You can also redirect the user to a login page or perform any additional logout actions here
+    };
+
     return (
       <div className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-700 text-white p-6 transform transition-transform duration-300 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:relative lg:translate-x-0`}>
         <div className="flex justify-between items-center mb-6">
@@ -40,6 +47,9 @@ export const  Sidebar =({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOp
             ))}
           </ul>
         </nav>
+        <button className="mt-8 w-full py-2 px-4 bg-gray-600 text-white rounded" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     )
   }

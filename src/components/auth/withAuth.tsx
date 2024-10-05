@@ -17,7 +17,7 @@ const withAuth = <P extends WithAuthProps>(WrappedComponent: ComponentType<P>) =
     const router = useRouter();
 
     useEffect(() => {
-      const sessionId = Cookies.get('session_id'); // Replace 'session_id' with your cookie name
+      const sessionId = Cookies.get('access_token'); // Replace 'session_id' with your cookie name
 
       if (!sessionId) {
         router.push('/auth/login'); // Redirect to login page if no session

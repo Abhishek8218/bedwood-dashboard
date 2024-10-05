@@ -1,10 +1,10 @@
 import { ChartData } from "chart.js"
 
 export type Product = {
-    id: number
+    id: string
     name: string
     price: number
-    stock: number
+
     image: string
     category: string
     description: string
@@ -44,9 +44,11 @@ export type Product = {
   export type ProductFormData = {
     name: string
     price: number
-    stock: number
-    category: string
-    description: string
+    categoryId: string
+    variations?: { value: string; type: string }[] | undefined;
+    subCategoryId: string
+    descriptions: string
+    image: string
   }
   
   export type ProductFormProps = {

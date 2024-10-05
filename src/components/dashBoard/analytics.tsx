@@ -1,7 +1,7 @@
 'use client';
 
 
-import { categoryData, customerData, initialProducts, salesData } from "@/src/data/dummyData"
+import { categoryData, customerData, salesData } from "@/src/data/dummyData"
 import { useState } from "react"
 import { Bar, Doughnut, Line } from "react-chartjs-2"
 import {
@@ -92,7 +92,7 @@ export const Analytics = () =>  {
             <Bar data={customerData} options={chartOptions} />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow overflow-scroll">
+        {/* <div className="bg-white p-6 rounded-lg shadow overflow-scroll">
           <h3 className="text-lg font-semibold mb-4">Top Selling Products</h3>
           <table className="min-w-full divide-y divide-gray-200 ">
             <thead className="bg-gray-50">
@@ -114,7 +114,7 @@ export const Analytics = () =>  {
               ))}
             </tbody>
           </table>
-        </div>
+        </div> */}
       </div>
     )
   }

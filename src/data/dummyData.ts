@@ -1,4 +1,4 @@
-import { CategoryData, Customer, CustomerData, Order, Product, SalesData } from "../types/type"
+import { CategoryData, Customer, CustomerData, Order, SalesData } from "../types/type"
 
 // Dummy data
 export const salesData: SalesData = {
@@ -44,33 +44,7 @@ export const salesData: SalesData = {
     ]
   }
   
-  export const initialProducts: Product[] = [
-    { id: 1, name: 'Smartphone', price: 699, stock: 50, image: 'https://via.placeholder.com/50?text=Image', category: 'Electronics', description: 'High-end smartphone with advanced features' },
-    { id: 2, name: 'Laptop', price: 1299, stock: 30, image: 'https://via.placeholder.com/50?text=Image', category: 'Electronics', description: 'Powerful laptop for work and gaming'},
-    { id: 3, name: 'Headphones', price: 199, stock: 100, image: 'https://via.placeholder.com/50?text=Image', category: 'Electronics', description: 'Noise-cancelling wireless headphones'},
-    { id: 4, name: 'T-Shirt', price: 29, stock: 200, image: 'https://via.placeholder.com/50?text=Image', category: 'Clothing', description: 'Comfortable cotton t-shirt' },
-    { id: 5, name: 'Jeans', price: 79, stock: 150, image: 'https://via.placeholder.com/50?text=Image', category: 'Clothing', description: 'Classic blue jeans'},
-    { id: 6, name: 'Novel', price: 15, stock: 300, image: 'https://via.placeholder.com/50?text=Image', category: 'Books', description: 'Bestselling fiction novel'},
-    { id: 7, name: 'Cookbook', price: 25, stock: 80, image: 'https://via.placeholder.com/50?text=Image', category: 'Books', description: 'Gourmet recipes cookbook' },
-    { id: 8, name: 'Plant Pot', price: 19, stock: 120, image: 'https://via.placeholder.com/50?text=Image', category: 'Home & Garden', description: 'Ceramic plant pot'},
-    { id: 9, name: 'Throw Pillow', price: 39, stock: 100, image: 'https://via.placeholder.com/50?text=Image', category: 'Home & Garden', description: 'Decorative throw pillow' },
-    { id: 10, name: 'Toy Car', price: 24, stock: 200, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Die-cast model car'},
-    { id: 11, name: 'Toy Plane', price: 29, stock: 150, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Remote-controlled toy plane'},
-    { id: 12, name: 'Toy Train', price: 19, stock: 180, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Wooden toy train'},
-    { id: 13, name: 'Toy Doll', price: 29, stock: 100, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Interactive toy doll'},
-    { id: 14, name: 'Toy Robot', price: 39, stock: 80, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Educational toy robot'},
-    { id: 15, name: 'Toy Blocks', price: 15, stock: 250, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Building blocks set'},
-    { id: 16, name: 'Toy Puzzle', price: 19, stock: 200, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Jigsaw puzzle set'},
-    { id: 17, name: 'Toy Playset', price: 29, stock: 150, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Imaginative playset'},
-    { id: 18, name: 'Toy Vehicle', price: 25, stock: 180, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Miniature vehicle set'},
-    { id: 19, name: 'Toy Animal', price: 19, stock: 100, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Stuffed animal toy'},
-    { id: 20, name: 'Toy Boardgame', price: 29, stock: 80, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Classic boardgame set'},
-    { id: 21, name: 'Toy Playdough', price: 15, stock: 250, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Creative playdough set'},
-    { id: 22, name: 'Toy Art', price: 19, stock: 200, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Art and craft set'},
-    { id: 23, name: 'Toy Science', price: 29, stock: 150, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Science experiment kit'},
-    { id: 24, name: 'Toy Musical', price: 25, stock: 180, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Musical instrument toy'},
-    { id: 25, name: 'Toy Sports', price: 19, stock: 100, image: 'https://via.placeholder.com/50?text=Image', category: 'Toys', description: 'Sports equipment toy'},
-  ]
+
   
   export const orders: Order[] = [
     { id: 1, customer: 'John Doe', product: 'Smartphone', quantity: 1, total: 699, date: '2023-06-01', status: 'Delivered' },

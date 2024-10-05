@@ -1,73 +1,72 @@
 'use client';
 
-
 import React from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import Cookies from 'js-cookie';
+import { login, validateToken } from '@/src/services/auth';
+ // Adjust the import path as needed
 
 // Define the validation schema using Yup
 const loginSchema = Yup.object().shape({
-  username: Yup.string().required('Username is required'),
+  email: Yup.string().required('User name is required'),
   password: Yup.string()
     .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
+    .min(5, 'Password must be at least 6 characters'),
 });
 
 // Define types for form inputs
 interface LoginFormInputs {
-  username: string;
+  email: string; // Changed from email to username
   password: string;
 }
 
 // Define types for the response from the login API
 interface LoginResponse {
-  sessionId: string; // Assuming session ID is returned as part of the response
-  // Add more fields if your API response contains other data
-}
-// Dummy login function to simulate API call
-const loginUser = async (data: LoginFormInputs): Promise<LoginResponse> => {
-    // Simulate a successful login with dummy credentials
-    const dummyUsername = 'testuser';
-    const dummyPassword = '123456';
-    
-    if (data.username === dummyUsername && data.password === dummyPassword) {
-      // Return a dummy session ID
-      return {
-        sessionId: 'dummy-session-id-12345',
-        
-        
-      };
-    } else {
-      throw new Error('Invalid username or password');
-    }
+  success: boolean;
+  message: string;
+  data: {
+    accessToken: string; // Adjusted to reflect your API response structure
   };
-  
-  const Login: React.FC = () => {
-    const { handleSubmit, control } = useForm<LoginFormInputs>({
-      resolver: yupResolver(loginSchema),
-    });
-  
-    const handleLogin: UseMutationResult<LoginResponse, Error, LoginFormInputs> = useMutation({
-      mutationKey: ['login'],
-      mutationFn: loginUser,
-      onSuccess: (data) => {
-        // Save the session ID in a cookie
-        Cookies.set('session_id', data.sessionId);
+}
+
+const Login: React.FC = () => {
+  const { handleSubmit, control } = useForm<LoginFormInputs>({
+    resolver: yupResolver(loginSchema),
+  });
+
+  const handleLogin: UseMutationResult<LoginResponse, Error, LoginFormInputs> = useMutation({
+    mutationKey: ['login'],
+    mutationFn: login, // Using your login function
+    onSuccess: async (data:LoginResponse) => {
+      // Log the access token to the console
+      console.log('Access Token:', data.data.accessToken);
+      // Optionally save the access token in a cookie
+      Cookies.set('access_token', data.data.accessToken);
+      // Redirect to dashboard or any other page
+      try {
+        const validationResponse = await validateToken();
+        console.log('Token validation response:', validationResponse);
         // Redirect to dashboard or any other page
         window.location.href = '/';
-      },
-      onError: (error) => {
-        // Handle login error
-        console.error('Login failed:', error.message);
-      },
-    });
-  
+      } catch (error) {
+        console.error('Token validation failed:', error);
+        // Handle token validation error if necessary
+      }
+
+    },
+    onError: (error) => {
+      // Handle login error
+      console.error('Login failed:', error.message);
+    },
+  });
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (formData) => {
     handleLogin.mutate(formData);
+    console.log("clicked")
+    console.log('Form data:', formData);
   };
 
   return (
@@ -87,7 +86,7 @@ const loginUser = async (data: LoginFormInputs): Promise<LoginResponse> => {
                 <label className="text-gray-800 text-sm mb-2 block">User name</label>
                 <div className="relative flex items-center">
                   <Controller
-                    name="username"
+                    name="email"
                     control={control}
                     defaultValue=""
                     render={({ field }) => (
@@ -197,8 +196,8 @@ const loginUser = async (data: LoginFormInputs): Promise<LoginResponse> => {
           <div className="lg:h-[400px] md:h-[300px] max-md:mt-8">
             <img
               src="https://readymadeui.com/login-image.webp"
-              className="w-full h-full max-md:w-4/5 mx-auto block object-cover"
-              alt="Dining Experience"
+              className="w-full h-full max-md:rounded-tl-[30px] max-md:rounded-tr-[30px] max-md:rounded-bl-[30px] max-md:rounded-br-[30px] object-cover rounded-lg shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)]"
+              alt="Login"
             />
           </div>
         </div>
