@@ -170,7 +170,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                 id="name"
                                 type="text"
                                 {...field}
-                                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 p-1 block w-full text-black rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             />
                         )}
                     />
@@ -188,7 +188,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                 id="price"
                                 type="number"
                                 {...field}
-                                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 p-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             />
                         )}
                     />
@@ -206,7 +206,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                        className="mt-1 p-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                     >
                                         <option value="">Select</option>
                                         {parentCategories?.data?.map((category) => (
@@ -234,7 +234,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                 render={({ field }) => (
                                     <select
                                         {...field}
-                                        className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                        className="mt-1 p-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                         disabled={!selectedCategoryId}
                                     >
                                         <option value="">Select</option>
@@ -310,7 +310,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                 id="descriptions"
                                 {...field}
                                 rows={4}
-                                className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 p-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             />
                         )}
                     />
@@ -378,7 +378,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                     type="text"
                                     {...field}
                                     placeholder="Variation value"
-                                    className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="block p-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
                             )}
                         />
@@ -390,7 +390,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                     type="text"
                                     {...field}
                                     placeholder="Variation type"
-                                    className="block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="block  p-1 w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 />
                             )}
                         />

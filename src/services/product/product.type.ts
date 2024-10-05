@@ -9,7 +9,9 @@
     isDeleted?: boolean;
     variations?: { value: string; type: string }[] | undefined;
     name: string;
+    categoryName: string;
     categoryId: string;
+    subCategoryName: string;
     subCategoryId: string;
     image: string;
     descriptions?: string;

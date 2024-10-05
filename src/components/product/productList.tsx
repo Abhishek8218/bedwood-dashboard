@@ -34,6 +34,7 @@ export const ProductList = () => {
 
 
   const products = data?.data || [];
+  console.log("products",products)
   const totalProducts = data?.extra?.total || 0;
   const itemsPerPage = data?.extra?.limit || 20;
 
@@ -131,6 +132,7 @@ export const ProductList = () => {
                 Price {sortField === 'price' && (sortDirection === 'asc' ? '▲' : '▼')}
               </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sub Category</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -142,7 +144,8 @@ export const ProductList = () => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{product.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">${product.price}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{product.categoryId}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{product.categoryName}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{product.subCategoryName}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
                     onClick={() => {
