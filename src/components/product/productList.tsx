@@ -19,10 +19,11 @@ export const ProductList = () => {
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   const queryClient = useQueryClient();
-  const { data, isLoading, error } = useQuery<ProductResponse>({
+  const { data, isLoading, error,refetch } = useQuery<ProductResponse>({
     queryKey: ['products', currentPage, filterCategory, filterPrice, sortField, sortDirection],
     queryFn: getProductsList,
   });
+refetch()
 
   const handleDelete = useMutation({
     mutationKey: ['deleteProduct'],
@@ -57,12 +58,14 @@ export const ProductList = () => {
   const handleAddProduct = async () => {
     // Implement add product logic here
     await queryClient.invalidateQueries({ queryKey: ['products'] });
+    refetch();
     setIsModalOpen(false);
   };
 
   const handleUpdateProduct = async () => {
     // Implement update product logic here
     await queryClient.invalidateQueries({ queryKey: ['products'] });
+    refetch();
     setEditingProduct(null);
     setIsModalOpen(false);
   };
@@ -140,7 +143,7 @@ export const ProductList = () => {
             {sortedProducts.reverse().map((product) => (
               <tr key={product._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded" />
+                  <img src={product.image[0]} alt={product.name} className="w-12 h-12 object-cover rounded" />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{product.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">${product.price}</td>

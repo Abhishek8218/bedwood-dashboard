@@ -13,7 +13,7 @@
     categoryId: string;
     subCategoryName: string;
     subCategoryId: string;
-    image: string;
+    image: (string | undefined)[];
     descriptions?: string;
     price: number;
   }

@@ -5,7 +5,7 @@ export type Product = {
     name: string
     price: number
 
-    image: string
+    image: (string | undefined)[];
     category: string
     description: string
 
@@ -46,9 +46,9 @@ export type Product = {
     price: number
     categoryId: string
     variations?: { value: string; type: string }[] | undefined;
-    subCategoryId: string
+    subCategoryId?: string
     descriptions: string
-    image: string
+    image: (string | undefined)[];
   }
   
   export type ProductFormProps = {

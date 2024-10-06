@@ -17,3 +17,8 @@ export const ImageUpload = async (file: File): Promise<ImageUploadResponse> => {
         },
     })).data;
 };
+
+
+export const ImageDelete = async (url: string | undefined): Promise<ImageUploadResponse> => {
+    return (await Api.post("/file/remove", { url })).data;
+};

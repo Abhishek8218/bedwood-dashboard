@@ -1,11 +1,16 @@
 
-
+interface ISelectedVariation {
+    _id: string;
+    value: string;
+    type: string;
+}
 
     interface IOrderDetail {
         quantity: number;           // The quantity of the item ordered
         name: string;              // The name of the item
         price: number;             // The price of the item
         categoryName: string;      // The category of the item
+        selectedVariation: ISelectedVariation;
       }
       
       // Define the Order type for each order

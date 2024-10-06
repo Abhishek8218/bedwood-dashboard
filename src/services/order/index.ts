@@ -11,6 +11,10 @@ export const getOrders = async () => {
         return (await Api.post(path + "/update-status", data)).data;
     }
 
+    export const orderDetails = async (id: string) => {
+        return (await Api.get(path + "/details/" + id)).data;
+    }
+
 
 
 
