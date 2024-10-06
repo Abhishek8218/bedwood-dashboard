@@ -1,13 +1,14 @@
 'use client';
 
-import {  Product } from "@/src/types/type";
+import { Product } from "@/src/types/type";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { ProductForm } from "./productForm";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getProductsList,deleteProduct } from '@/src/services/product'; // Adjust the import path as needed
+import { getProductsList, deleteProduct } from '@/src/services/product';
+import { getCategoriesList } from '@/src/services/category';
 import { ProductResponse, TProduct } from "@/src/services/product/product.type";
-
+import { TCatgeoryApiResponse, TCategory } from "@/src/services/category/category.type";
 
 export const ProductList = () => {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -15,29 +16,33 @@ export const ProductList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterCategory, setFilterCategory] = useState('');
   const [filterPrice, setFilterPrice] = useState('');
-  const [sortField, setSortField] = useState<keyof TProduct>('name' as keyof TProduct);
+  const [sortField, setSortField] = useState<keyof TProduct>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   const queryClient = useQueryClient();
-  const { data, isLoading, error,refetch } = useQuery<ProductResponse>({
+
+  const { data, isLoading, error, refetch } = useQuery<ProductResponse>({
     queryKey: ['products', currentPage, filterCategory, filterPrice, sortField, sortDirection],
     queryFn: getProductsList,
   });
-refetch()
+
+  const { data: categoriesData } = useQuery<TCatgeoryApiResponse>({
+    queryKey: ['categories'],
+    queryFn: () => getCategoriesList({ showOnlyParent: 1 }),
+  });
 
   const handleDelete = useMutation({
     mutationKey: ['deleteProduct'],
     mutationFn: deleteProduct,
-    onSuccess:  () => {
-       queryClient.invalidateQueries({ queryKey: ['products'] });
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
     },
   });
 
-
   const products = data?.data || [];
-  console.log("products",products)
   const totalProducts = data?.extra?.total || 0;
   const itemsPerPage = data?.extra?.limit || 20;
+  const categories = categoriesData?.data || [];
 
   const filteredProducts = products
     .filter((product: TProduct) => !filterCategory || product.categoryId === filterCategory)
@@ -48,22 +53,22 @@ refetch()
     });
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
-    if ((a[sortField as keyof TProduct] ?? '') < (b[sortField as keyof TProduct] ?? '')) return sortDirection === 'asc' ? -1 : 1;
-    if ((a[sortField as keyof TProduct] ?? '') > (b[sortField as keyof TProduct] ?? '')) return sortDirection === 'asc' ? 1 : -1;
+    const aValue = a[sortField] ?? '';
+    const bValue = b[sortField] ?? '';
+    if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
+    if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
     return 0;
   });
 
   const pageCount = Math.ceil(totalProducts / itemsPerPage);
 
   const handleAddProduct = async () => {
-    // Implement add product logic here
     await queryClient.invalidateQueries({ queryKey: ['products'] });
     refetch();
     setIsModalOpen(false);
   };
 
   const handleUpdateProduct = async () => {
-    // Implement update product logic here
     await queryClient.invalidateQueries({ queryKey: ['products'] });
     refetch();
     setEditingProduct(null);
@@ -71,11 +76,8 @@ refetch()
   };
 
   const handleDeleteProduct = async (ids: string) => {
-
-    // Implement delete product logic here
     handleDelete.mutateAsync(ids);
-    console.log("clicked",ids)
-     queryClient.invalidateQueries({ queryKey: ['products'] });
+    queryClient.invalidateQueries({ queryKey: ['products'] });
   };
 
   const handleSort = (field: keyof TProduct) => {
@@ -101,7 +103,11 @@ refetch()
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
             <option value="">All Categories</option>
-            {/* Add category options dynamically based on your data */}
+            {categories.map((category: TCategory) => (
+              <option key={category._id} value={category._id}>
+                {category.name}
+              </option>
+            ))}
           </select>
           <select
             value={filterPrice}
@@ -134,13 +140,17 @@ refetch()
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('price')}>
                 Price {sortField === 'price' && (sortDirection === 'asc' ? '▲' : '▼')}
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sub Category</th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('categoryName')}>
+                Category {sortField === 'categoryName' && (sortDirection === 'asc' ? '▲' : '▼')}
+              </th>
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer" onClick={() => handleSort('subCategoryName')}>
+                Sub Category {sortField === 'subCategoryName' && (sortDirection === 'asc' ? '▲' : '▼')}
+              </th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {sortedProducts.reverse().map((product) => (
+            {sortedProducts.map((product) => (
               <tr key={product._id}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <img src={product.image[0]} alt={product.name} className="w-12 h-12 object-cover rounded" />
@@ -156,7 +166,7 @@ refetch()
                         ...product,
                         id: product._id,
                         category: product.categoryId,
-                        description: product.descriptions|| '',
+                        description: product.descriptions || '',
                       });
                       setIsModalOpen(true);
                     }}
