@@ -1,20 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { useMutation, UseMutationResult } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import Cookies from 'js-cookie';
 import { login, validateToken } from '@/src/services/auth';
- // Adjust the import path as needed
+import { Eye, EyeOff,  } from 'lucide-react';
+// Adjust the import path as needed
 
 // Define the validation schema using Yup
 const loginSchema = Yup.object().shape({
   email: Yup.string().required('User name is required'),
   password: Yup.string()
     .required('Password is required')
-    .min(5, 'Password must be at least 6 characters'),
+    .min(6, 'Password must be at least 6 characters'),
 });
 
 // Define types for form inputs
@@ -33,6 +34,7 @@ interface LoginResponse {
 }
 
 const Login: React.FC = () => {
+  const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
   const { handleSubmit, control } = useForm<LoginFormInputs>({
     resolver: yupResolver(loginSchema),
   });
@@ -40,7 +42,7 @@ const Login: React.FC = () => {
   const handleLogin: UseMutationResult<LoginResponse, Error, LoginFormInputs> = useMutation({
     mutationKey: ['login'],
     mutationFn: login, // Using your login function
-    onSuccess: async (data:LoginResponse) => {
+    onSuccess: async (data: LoginResponse) => {
       // Log the access token to the console
       console.log('Access Token:', data.data.accessToken);
       // Optionally save the access token in a cookie
@@ -55,7 +57,6 @@ const Login: React.FC = () => {
         console.error('Token validation failed:', error);
         // Handle token validation error if necessary
       }
-
     },
     onError: (error) => {
       // Handle login error
@@ -65,7 +66,7 @@ const Login: React.FC = () => {
 
   const onSubmit: SubmitHandler<LoginFormInputs> = (formData) => {
     handleLogin.mutate(formData);
-    console.log("clicked")
+    console.log("clicked");
     console.log('Form data:', formData);
   };
 
@@ -114,6 +115,7 @@ const Login: React.FC = () => {
                   </svg>
                 </div>
               </div>
+
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">Password</label>
                 <div className="relative flex items-center">
@@ -124,51 +126,34 @@ const Login: React.FC = () => {
                     render={({ field }) => (
                       <input
                         {...field}
-                        type="password"
+                        type={passwordVisible ? 'text' : 'password'} // Toggle input type
                         required
                         className="w-full text-sm text-gray-800 border border-gray-300 px-4 py-3 rounded-lg outline-blue-600"
                         placeholder="Enter password"
                       />
                     )}
                   />
-                  <svg
+                  {/* <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="#bbb"
                     stroke="#bbb"
                     className="w-[18px] h-[18px] absolute right-4 cursor-pointer"
-                    viewBox="0 0 128 128"
+                    vi ewBox="0 0 128 128"
+                   // Toggle visibility on click
                   >
                     <path
                       d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z"
                       data-original="#000000"
                     ></path>
-                  </svg>
-                </div>
-              </div>
+                  </svg> */}
+                  {
+                    passwordVisible ?
+                      <EyeOff              className="w-[18px] h-[18px] absolute right-4 cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)} />
+                      :
+                      <Eye              className="w-[18px] h-[18px] absolute right-4 cursor-pointer" onClick={() => setPasswordVisible(!passwordVisible)} />
+                   
 
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                  />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-3 block text-sm text-gray-800"
-                  >
-                    Remember me
-                  </label>
-                </div>
-
-                <div className="text-sm">
-                  <a
-                    href="javascript:void(0);"
-                    className="text-blue-600 hover:underline font-semibold"
-                  >
-                    Forgot your password?
-                  </a>
+                  }
                 </div>
               </div>
 
@@ -182,15 +167,6 @@ const Login: React.FC = () => {
                 </button>
               </div>
 
-              <p className="text-sm !mt-8 text-center text-gray-800">
-                Don&apos;t have an account{' '}
-                <a
-                  href="javascript:void(0);"
-                  className="text-blue-600 font-semibold hover:underline ml-1 whitespace-nowrap"
-                >
-                  Register here
-                </a>
-              </p>
             </form>
           </div>
           <div className="lg:h-[400px] md:h-[300px] max-md:mt-8">
