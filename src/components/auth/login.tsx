@@ -15,7 +15,6 @@ const loginSchema = Yup.object().shape({
   email: Yup.string().required('User name is required'),
   password: Yup.string()
     .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
 });
 
 // Define types for form inputs
