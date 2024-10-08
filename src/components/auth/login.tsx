@@ -13,8 +13,7 @@ import { Eye, EyeOff,  } from 'lucide-react';
 // Define the validation schema using Yup
 const loginSchema = Yup.object().shape({
   email: Yup.string().required('User name is required'),
-  password: Yup.string()
-    .required('Password is required')
+  password: Yup.string().required('Password is required')
 });
 
 // Define types for form inputs
