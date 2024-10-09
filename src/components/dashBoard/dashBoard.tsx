@@ -8,6 +8,7 @@ import { Analytics } from "./analytics"
 import {ProductList}  from "../product/productList"
 import { OrderList } from "../order/orderList"
 import { CustomerList } from "../customer/customer"
+import { CategoryList } from "../categories/categories";
 
 
 
@@ -52,7 +53,8 @@ import { CustomerList } from "../customer/customer"
             {activeTab === 'analytics' && <Analytics />}
             {activeTab === 'products' && <ProductList />}
             {activeTab === 'orders' && <OrderList />}
-            {activeTab === 'customers' && <CustomerList />}
+            {activeTab === 'associate' && <CustomerList />}
+            {activeTab === 'category' && <CategoryList />}
           </main>
         </div>
       </div>

@@ -6,12 +6,13 @@ import * as yup from 'yup';
 import { Controller, useForm, useFieldArray } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createProduct } from "@/src/services/product";
-import { getCategoriesList, createCategory } from "@/src/services/category"; 
+import { getCategoriesList, } from "@/src/services/category"; 
 import { useState, useEffect } from 'react';
 import { TCategory } from "@/src/services/category/category.type";
 import { ImageDelete, ImageUpload } from "@/src/services/imageUpload";
 import { MinusCircle, PlusCircle, Upload, X } from "lucide-react";
 import { ImageUploadResponse } from "@/src/services/imageUpload/imageUpload.type";
+
 
 const productSchema = yup.object({
     name: yup.string().required('Product name is required'),
@@ -45,10 +46,10 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
     const queryClient = useQueryClient();
     const { fields, append, remove } = useFieldArray({ control, name: "variations" });
     const [subCategories, setSubCategories] = useState<TCategory[]>([]);
-    const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
-    const [showNewSubCategoryForm, setShowNewSubCategoryForm] = useState(false);
-    const [newCategory, setNewCategory] = useState({ name: ''});
-    const [newSubCategory, setNewSubCategory] = useState({ name: '', parentId: '' });
+    // const [showNewCategoryForm, setShowNewCategoryForm] = useState(false);
+    // const [showNewSubCategoryForm, setShowNewSubCategoryForm] = useState(false);
+    // const [newCategory, setNewCategory] = useState({ name: ''});
+    // const [newSubCategory, setNewSubCategory] = useState({ name: '', parentId: '' });
 
     const { data: parentCategories } = useQuery({
         queryKey: ['parentCategories'],
@@ -72,33 +73,37 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
         fetchSubCategories(selectedCategoryId);
     }, [selectedCategoryId]);
 
-    const createCategoryMutation = useMutation({
-        mutationKey: ['createCategory'],
-        mutationFn: createCategory,
-        onSuccess: () => {
-            alert('New category created successfully');
-            setShowNewCategoryForm(false);
-            setNewCategory({ name: ''});
-            queryClient.invalidateQueries({ queryKey: ['parentCategories'] });
-        },
-        onError: (error: Error) => {
-            alert(`Error: ${error.message}`);
-        }
-    });
 
-    const createSubCategoryMutation = useMutation({
-        mutationKey: ['createSubCategory'],
-        mutationFn: createCategory,
-        onSuccess: async () => {
-            alert('New subcategory created successfully');
-            setShowNewSubCategoryForm(false);
-            setNewSubCategory({ name: '', parentId: '' });
-            await fetchSubCategories(selectedCategoryId);
-        },
-        onError: (error: Error) => {
-            alert(`Error: ${error.message}`);
-        }
-    });
+console.log("parentCategories", parentCategories);
+console.log("subCategirues", subCategories)
+    //Muation to  create category
+    // const createCategoryMutation = useMutation({
+    //     mutationKey: ['createCategory'],
+    //     mutationFn: createCategory,
+    //     onSuccess: () => {
+    //         alert('New category created successfully');
+    //         setShowNewCategoryForm(false);
+    //         setNewCategory({ name: ''});
+    //         queryClient.invalidateQueries({ queryKey: ['parentCategories'] });
+    //     },
+    //     onError: (error: Error) => {
+    //         alert(`Error: ${error.message}`);
+    //     }
+    // });
+//Mutation to create subcategory
+    // const createSubCategoryMutation = useMutation({
+    //     mutationKey: ['createSubCategory'],
+    //     mutationFn: createCategory,
+    //     onSuccess: async () => {
+    //         alert('New subcategory created successfully');
+    //         setShowNewSubCategoryForm(false);
+    //         setNewSubCategory({ name: '', parentId: '' });
+    //         await fetchSubCategories(selectedCategoryId);
+    //     },
+    //     onError: (error: Error) => {
+    //         alert(`Error: ${error.message}`);
+    //     }
+    // });
 
     const addProduct = useMutation({
         mutationKey: ['createProduct'],
@@ -166,15 +171,15 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
         await addProduct.mutateAsync(data);
     };
 
-    const handleCreateCategory = () => {
-        createCategoryMutation.mutateAsync(newCategory);
-    };
+    // const handleCreateCategory = () => {
+    //     createCategoryMutation.mutateAsync(newCategory);
+    // };
 
-    const handleCreateSubCategory = () => {
-        if (selectedCategoryId) {
-            createSubCategoryMutation.mutateAsync({ ...newSubCategory, parentId: selectedCategoryId });
-        }
-    };
+    // const handleCreateSubCategory = () => {
+    //     if (selectedCategoryId) {
+    //         createSubCategoryMutation.mutateAsync({ ...newSubCategory, parentId: selectedCategoryId });
+    //     }
+    // };
 
 //   useEffect(() => {
 //     if (product?.image) {
@@ -235,19 +240,18 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                   className="w-full px-4 py-2 text-gray-700 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:bg-white"
                               >
                                   <option value="">Select</option>
-                                  {parentCategories?.data?.map((category) => (
-                                      <option key={category._id} value={category._id}>{category.name}</option>
-                                  ))}
+
+                                  {parentCategories?.data
+  ?.filter((category) => category.status) // Filter categories with status true
+  .map((category) => (
+    <option key={category._id} value={category._id}>
+      {category.name}
+    </option>
+))}
                               </select>
                           )}
                       />
-                      <button 
-                          type="button" 
-                          onClick={() => setShowNewCategoryForm(!showNewCategoryForm)}
-                          className="p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
-                      >
-                          {showNewCategoryForm ? <X size={20} /> : <PlusCircle size={20} />}
-                      </button>
+                   
                   </div>
                   {errors.categoryId && <p className="mt-1 text-red-500 text-xs">{errors.categoryId.message}</p>}
               </div>
@@ -264,27 +268,20 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                                   disabled={!selectedCategoryId}
                               >
                                   <option value="">Select</option>
-                                  {subCategories.map((subCategory) => (
+                                  {subCategories.filter((subcategory) => subcategory.status).map((subCategory) => (
                                       <option key={subCategory._id} value={subCategory._id}>{subCategory.name}</option>
                                   ))}
                               </select>
                           )}
                       />
-                      <button 
-                          type="button" 
-                          onClick={() => setShowNewSubCategoryForm(!showNewSubCategoryForm)}
-                          className="p-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
-                          disabled={!selectedCategoryId}
-                      >
-                          {showNewSubCategoryForm ? <X size={20} /> : <PlusCircle size={20} />}
-                      </button>
+                  
                   </div>
                   {errors.subCategoryId && <p className="mt-1 text-red-500 text-xs">{errors.subCategoryId.message}</p>}
               </div>
           </div>
 
           {/* New Category Form */}
-          {showNewCategoryForm && (
+          {/* {showNewCategoryForm && (
               <div className="col-span-2 bg-gray-50 p-6 rounded-lg shadow-inner">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">New Category</h3>
                   <input
@@ -302,10 +299,10 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                       Create Category
                   </button>
               </div>
-          )}
+          )} */}
 
           {/* New Subcategory Form */}
-          {showNewSubCategoryForm && (
+          {/* {showNewSubCategoryForm && (
               <div className="col-span-2 bg-gray-50 p-6 rounded-lg shadow-inner">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">New Subcategory</h3>
                   <input
@@ -323,7 +320,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
                       Create Subcategory
                   </button>
               </div>
-          )}
+          )} */}
 
           {/* Description */}
           <div className="col-span-2">

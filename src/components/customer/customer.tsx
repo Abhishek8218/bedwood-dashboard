@@ -100,12 +100,12 @@ export const CustomerList = () => {
   };
 
   if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error fetching customers: {error.message}</div>;
+  if (error) return <div>Error fetching Associate: {error.message}</div>;
 
   return (
     <div className="bg-white shadow rounded-lg">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">Customers</h3>
+        <h3 className="text-lg leading-6 font-medium text-gray-900">Associates</h3>
       </div>
       <div className="px-4 py-5 sm:p-6 overflow-x-scroll">
         <table className="min-w-full divide-y divide-gray-200 overflow-x-scroll">

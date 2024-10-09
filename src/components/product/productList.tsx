@@ -8,7 +8,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getProductsList, deleteProduct } from '@/src/services/product';
 import { getCategoriesList } from '@/src/services/category';
 import { ProductResponse, TProduct } from "@/src/services/product/product.type";
-import { TCatgeoryApiResponse, TCategory } from "@/src/services/category/category.type";
+import { TCategoryApiResponse, TCategory } from "@/src/services/category/category.type";
 
 export const ProductList = () => {
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -26,7 +26,7 @@ export const ProductList = () => {
     queryFn: getProductsList,
   });
 
-  const { data: categoriesData } = useQuery<TCatgeoryApiResponse>({
+  const { data: categoriesData } = useQuery<TCategoryApiResponse>({
     queryKey: ['categories'],
     queryFn: () => getCategoriesList({ showOnlyParent: 1 }),
   });

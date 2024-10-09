@@ -1,6 +1,6 @@
 import React from "react"
 
-import { BarChart3, Home, Package, ShoppingCart, Users, X } from 'lucide-react'
+import { BarChart3, ChartBarStacked, Home, Package, ShoppingCart, Users, X } from 'lucide-react'
 import { SidebarProps } from "@/src/types/type"
 
 export const  Sidebar =({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen }: SidebarProps) =>  {
@@ -8,8 +8,9 @@ export const  Sidebar =({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOp
       { name: 'Dashboard', icon: Home, value: 'dashboard' },
       { name: 'Analytics', icon: BarChart3, value: 'analytics' },
       { name: 'Products', icon: Package, value: 'products' },
+      { name: 'Category', icon: ChartBarStacked, value: 'category' },
       { name: 'Orders', icon: ShoppingCart, value: 'orders' },
-      { name: 'Customers', icon: Users, value: 'customers' },
+      { name: 'Associate', icon: Users, value: 'associate' },
     ]
     const handleLogout = () => {
       // Remove the access_token cookie
