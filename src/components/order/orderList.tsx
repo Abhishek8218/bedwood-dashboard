@@ -94,6 +94,8 @@ export const OrderList = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading orders</div>;
 
+  console.log('order detail', paginatedOrders)
+
   return (
     <div className="bg-white shadow rounded-lg">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center flex-wrap gap-4">

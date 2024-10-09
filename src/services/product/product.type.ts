@@ -11,8 +11,8 @@
     name: string;
     categoryName: string;
     categoryId: string;
-    subCategoryName: string;
-    subCategoryId: string;
+    subCategoryName?: string;
+    subCategoryId?: string;
     image: (string | undefined)[];
     descriptions?: string;
     price: number;

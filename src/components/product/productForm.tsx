@@ -36,7 +36,7 @@ export const ProductForm = ({ product, onCancel }: ProductFormProps) => {
             name: '', 
             price: 0, 
             categoryId: '', 
-            subCategoryId: '',
+            subCategoryId: "",
             descriptions: '', 
             image: [], 
             variations: [{ value: '', type: '' }] 
@@ -124,7 +124,7 @@ console.log("subCategirues", subCategories)
         mutationFn: ImageUpload,
         onSuccess: (data: ImageUploadResponse) => {
             queryClient.invalidateQueries({ queryKey: ['products'] });
-            alert("Image uploaded successfully!");
+            
             const currentImages = watch('image');
             setValue('image', [...currentImages, data.data.url]);
         },
@@ -168,8 +168,14 @@ console.log("subCategirues", subCategories)
     };
 
     const onSubmit = async (data: ProductFormData) => {
+        // If subCategoryId is not selected or is an empty string, remove it from the data
+        if (!data.subCategoryId) {
+            delete data.subCategoryId;
+        }
+        
         await addProduct.mutateAsync(data);
     };
+    
 
     // const handleCreateCategory = () => {
     //     createCategoryMutation.mutateAsync(newCategory);
