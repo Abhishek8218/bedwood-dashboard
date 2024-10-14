@@ -2,9 +2,16 @@ import { Api } from "../config";
 
 const path = "/order";
 
-export const getOrders = async (page:number) => {
-    return (await Api.get(path + "/list?page=" + page)).data;
+export const getOrders = async (page:number,status:string) => {
+    let url = path + `/list?page=${page}`;
+    
+    // Append categoryId to the URL if it's available
+    if (status) {
+        url += `&status=${status}`;
     }
+    
+    return (await Api.get(url)).data;
+};
 
 
     export const updateOrderStatus = async (data: { orderId: string; status: string }) => {

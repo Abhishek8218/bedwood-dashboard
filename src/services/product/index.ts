@@ -8,9 +8,16 @@ export const createProduct = async (data: Partial<TProduct>): Promise<TProduct> 
   return (await Api.post(path + "/save", data)).data;
 };
 
-export const getProductsList = async (page:number): Promise<ProductResponse> => {
-    return (await Api.get(path + "/list?page=" + page)).data;
+export const getProductsList = async (page: number, categoryId?: string): Promise<ProductResponse> => {
+    let url = path + `/list?page=${page}`;
+    
+    // Append categoryId to the URL if it's available
+    if (categoryId) {
+        url += `&categoryId=${categoryId}`;
     }
+    
+    return (await Api.get(url)).data;
+};
 
 
 export const getProduct = async (id: string): Promise<TProduct> => {

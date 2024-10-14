@@ -9,15 +9,16 @@ export const OrderList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null); // State for selected order ID
   const [newStatus, setNewStatus] = useState<string>(''); // State for new status
-  const [isStatusPopupOpen, setIsStatusPopupOpen] = useState(false); // To handle status update popup visibility
+  const [isStatusPopupOpen, setIsStatusPopupOpen] = useState(false); 
+  const [statusFilter, setStatusFilter] = useState<string>(''); // To handle status update popup visibility
 
   const itemsPerPage = 20;
   const queryClient = useQueryClient();
 
   // Using TanStack Query to fetch orders
   const { data: orders = [], isLoading, error } = useQuery({
-    queryKey: ['orders'],
-    queryFn: () => getOrders(currentPage),
+    queryKey: ['orders', currentPage, statusFilter],
+    queryFn: () => getOrders(currentPage,statusFilter),
   });
 
   // Mutation to update order status
@@ -72,6 +73,12 @@ export const OrderList = () => {
       updateStatus.mutate({ orderId: selectedOrderId, status: newStatus });
     }
   };
+  
+   // Handle status filter change
+   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatusFilter(e.target.value);
+  };
+
 
   // Fetching order details when the popup is opened
   const orderDetail = useQuery({
@@ -100,6 +107,27 @@ export const OrderList = () => {
     <div className="bg-white shadow rounded-lg">
       <div className="px-4 py-5 sm:px-6 flex justify-between items-center flex-wrap gap-4">
         <h3 className="text-lg leading-6 font-medium text-gray-900">Recent Orders</h3>
+
+
+        {/* Status filter dropdown */}
+        <div>
+          <label htmlFor="status-filter" className="mr-2 text-sm font-medium text-gray-700">
+            Filter by Status:
+          </label>
+          <select
+            id="status-filter"
+            value={statusFilter}
+            onChange={handleFilterChange}
+            className="p-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+           
+            <option value="">All</option>
+            <option value="Initiated">Initiated</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </div>
       </div>
       <div className="px-4 py-5 sm:p-6">
         <div className="overflow-x-auto">

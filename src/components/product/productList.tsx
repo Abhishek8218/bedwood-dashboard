@@ -15,15 +15,15 @@ export const ProductList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [filterCategory, setFilterCategory] = useState('');
-  const [filterPrice, setFilterPrice] = useState('');
+  const [filterPrice, setFilterPrice] = useState('0-2000');
   const [sortField, setSortField] = useState<keyof TProduct>('name');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
 
   const queryClient = useQueryClient();
 
   const { data, isLoading, error, refetch } = useQuery<ProductResponse>({
-    queryKey: ['products', currentPage, filterCategory, filterPrice, sortField, sortDirection],
-    queryFn: () => getProductsList(currentPage),
+    queryKey: ['products', currentPage, filterCategory, sortField, sortDirection],
+    queryFn: () => getProductsList(currentPage,filterCategory),
   });
 
   const { data: categoriesData } = useQuery<TCategoryApiResponse>({
@@ -43,13 +43,13 @@ export const ProductList = () => {
   const totalProducts = data?.extra?.total || 0;
   const itemsPerPage = data?.extra?.limit || 20;
   const categories = categoriesData?.data || [];
-  const filteredProducts = products
-    .filter((product: TProduct) => !filterCategory || product.categoryId === filterCategory)
-    .filter((product: TProduct) => {
+
+ const filteredProducts = products.filter((product: TProduct) => {
       if (!filterPrice) return true;
       const [min, max] = filterPrice.split('-').map(Number);
       return product.price >= min && (max ? product.price <= max : true);
     });
+
 
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     const aValue = a[sortField] ?? '';
@@ -114,11 +114,11 @@ export const ProductList = () => {
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
             <option value="">All Prices</option>
-            <option value="0-50">$0 - $50</option>
-            <option value="51-100">$51 - $100</option>
-            <option value="101-500">$101 - $500</option>
-            <option value="501-1000">$501 - $1000</option>
-            <option value="1001-">$1001+</option>
+            <option value="0-2000">₹0 - ₹2000</option>
+            <option value="2000-5000">₹2000 - ₹5000</option>
+            <option value="5000-10000">₹5000 - ₹10000</option>
+            <option value="10000-15000">₹10000 - ₹15000</option>
+            <option value="15000-">₹15000+</option>
           </select>
         </div>
         <button
@@ -155,7 +155,7 @@ export const ProductList = () => {
                   <img src={product.image[0]} alt={product.name} className="w-12 h-12 object-cover rounded" />
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{product.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">${product.price}</td>
+                <td className="px-6 py-4 whitespace-nowrap">₹{product.price}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{product.categoryName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{product.subCategoryName}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
