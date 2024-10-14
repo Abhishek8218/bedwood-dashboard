@@ -17,7 +17,7 @@ export const OrderList = () => {
   // Using TanStack Query to fetch orders
   const { data: orders = [], isLoading, error } = useQuery({
     queryKey: ['orders'],
-    queryFn: getOrders,
+    queryFn: () => getOrders(currentPage),
   });
 
   // Mutation to update order status

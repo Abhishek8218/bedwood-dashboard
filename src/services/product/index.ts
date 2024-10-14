@@ -8,8 +8,8 @@ export const createProduct = async (data: Partial<TProduct>): Promise<TProduct> 
   return (await Api.post(path + "/save", data)).data;
 };
 
-export const getProductsList = async (): Promise<ProductResponse> => {
-    return (await Api.get(path + "/list")).data;
+export const getProductsList = async (page:number): Promise<ProductResponse> => {
+    return (await Api.get(path + "/list?page=" + page)).data;
     }
 
 

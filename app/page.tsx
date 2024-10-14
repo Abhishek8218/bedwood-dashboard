@@ -1,12 +1,13 @@
 
 
-import  Dashboard  from "@/src/components/dashBoard/dashBoard";
+import Dashboard from "@/src/components/dashBoard/dashBoard";
+
 
 
  function Home() {
   return (
    <div>
-    <Dashboard/>
+   <Dashboard/>
    </div>
   );
 }

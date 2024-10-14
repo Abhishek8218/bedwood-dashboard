@@ -2,8 +2,8 @@ import { Api } from "../config";
 
 const path = "/order";
 
-export const getOrders = async () => {
-    return (await Api.get(path + "/list")).data;
+export const getOrders = async (page:number) => {
+    return (await Api.get(path + "/list?page=" + page)).data;
     }
 
 

@@ -23,7 +23,7 @@ export const ProductList = () => {
 
   const { data, isLoading, error, refetch } = useQuery<ProductResponse>({
     queryKey: ['products', currentPage, filterCategory, filterPrice, sortField, sortDirection],
-    queryFn: getProductsList,
+    queryFn: () => getProductsList(currentPage),
   });
 
   const { data: categoriesData } = useQuery<TCategoryApiResponse>({
@@ -43,7 +43,6 @@ export const ProductList = () => {
   const totalProducts = data?.extra?.total || 0;
   const itemsPerPage = data?.extra?.limit || 20;
   const categories = categoriesData?.data || [];
-
   const filteredProducts = products
     .filter((product: TProduct) => !filterCategory || product.categoryId === filterCategory)
     .filter((product: TProduct) => {

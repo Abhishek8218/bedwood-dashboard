@@ -1,12 +1,13 @@
 import React from "react"
 
-import { BarChart3, ChartBarStacked, Home, Package, ShoppingCart, Users, X } from 'lucide-react'
+import {  ChartBarStacked,Package, ShoppingCart, Users, X } from 'lucide-react'
 import { SidebarProps } from "@/src/types/type"
 
 export const  Sidebar =({ activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen }: SidebarProps) =>  {
     const navItems = [
-      { name: 'Dashboard', icon: Home, value: 'dashboard' },
-      { name: 'Analytics', icon: BarChart3, value: 'analytics' },
+      
+      // { name: 'Dashboard', icon: Home, value: 'dashboard' },
+      // { name: 'Analytics', icon: BarChart3, value: 'analytics' },
       { name: 'Products', icon: Package, value: 'products' },
       { name: 'Category', icon: ChartBarStacked, value: 'category' },
       { name: 'Orders', icon: ShoppingCart, value: 'orders' },

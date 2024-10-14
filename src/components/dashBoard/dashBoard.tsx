@@ -3,8 +3,8 @@
 import {  useState } from "react"
 import { Sidebar } from "../sidebar/sideBar"
 import { Menu } from "lucide-react"
-import { DashboardOverview } from "./dashBoardOverview"
-import { Analytics } from "./analytics"
+// import { DashboardOverview } from "./dashBoardOverview"
+// import { Analytics } from "./analytics"
 import {ProductList}  from "../product/productList"
 import { OrderList } from "../order/orderList"
 import { CustomerList } from "../customer/customer"
@@ -16,7 +16,7 @@ import { CategoryList } from "../categories/categories";
 
 
  const Dashboard  = () => {
-    const [activeTab, setActiveTab] = useState('dashboard')
+    const [activeTab, setActiveTab] = useState('products')
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
 
@@ -44,13 +44,14 @@ import { CategoryList } from "../categories/categories";
             </div>
           </header>
           <main className="flex-1 overflow-y-auto p-6 max-w-[100vw]">
-            {activeTab === 'dashboard' && (
+
+            {/* {activeTab === 'dashboard' && (
               <>
                 <DashboardOverview />
                 <Analytics />
               </>
             )}
-            {activeTab === 'analytics' && <Analytics />}
+            {activeTab === 'analytics' && <Analytics />} */}
             {activeTab === 'products' && <ProductList />}
             {activeTab === 'orders' && <OrderList />}
             {activeTab === 'associate' && <CustomerList />}
